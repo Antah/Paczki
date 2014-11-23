@@ -5,10 +5,14 @@
  */
 package paczki;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Antah
  */
-public class Graf {
-    
+public class Graf
+{
+
+ 
 }
