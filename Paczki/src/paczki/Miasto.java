@@ -20,7 +20,8 @@ class Miasto implements Comparable<Miasto>{
     /**
      * @param i numer porzadkowy tworzonego wierzcholka
      */
-    public Miasto(String n){
+    public Miasto(int p, String n){
+        numer = p;
         nazwa = n;
     }
  

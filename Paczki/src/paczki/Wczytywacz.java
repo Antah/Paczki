@@ -4,69 +4,126 @@
  * and open the template in the editor.
  */
 package paczki;
-import java.awt.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author Antah
  */
 public class Wczytywacz {
-    public static int loadGen0() throws FileNotFoundException, IOException{
-      String s = WireworldGUI.textFieldData.getText();
-      File file;
-      Scanner in;
-      try{
-          file = new File(s);
-          in = new Scanner(file);
-      } catch(Exception ex) {
-          JOptionPane.showMessageDialog(frame,
-                            "Couldn't open file. Try restarting and checking file name.",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-          return 0;
-      }
-      int w, h, n;
+    public static int wczytajMape(String nazwaPliku) throws FileNotFoundException, IOException{
+      File plik;
+      Scanner odczyt;
+
+      plik = new File(nazwaPliku);
+      odczyt = new Scanner(plik);
+          
       
-      w = in.nextInt();
-      h = in.nextInt();
-      
-      Generation.initialize(w, h);
-      
-      for(int i = 0; i < Generation.height; i++){
-          for(int j = 0; j < Generation.width; j++){
-              try{
-                  n = in.nextInt();
-                  switch(n) {
-                  case 0: Generation.tabA[i][j] = new EmptyCell();
-                        break;
-                  case 1: Generation.tabA[i][j] = new Conductor();
-                        break;
-                  case 2: Generation.tabA[i][j] = new Tail();
-                        break;
-                  case 3: Generation.tabA[i][j] = new Head();
-                      break;
-              }
-              } catch(Exception ex) {
-                  Generation.tabA[i][j] = new EmptyCell();
-              }
+      String s;
+      while(odczyt.hasNextLine()){
+          s = odczyt.nextLine();
+          if(s.contains("# miasta") == true){
+              System.out.println("# - miasta");
+              break;
           }
       }
+
+      while(odczyt.hasNextLine()){
+          s = odczyt.nextLine();
+          if(s.equals("") || s.equals(" ")){
+              continue;
+          }
+          String numer = "", nazwa = "";
+          Scanner odczyt2 = new Scanner(s);
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            numer = s;
+          }
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            nazwa = s;
+          }
+          System.out.println(numer + " - " + nazwa);
+          BazaDanych.utworzMiasto(numer, nazwa);
+      }
+      
+      while(odczyt.hasNextLine()){
+          s = odczyt.nextLine();
+          if(s.equals("") || s.equals(" ")){
+              continue;
+          }
+          String poczatek = "", koniec = "", waga = "";
+          Scanner odczyt2 = new Scanner(s);
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            poczatek = s;
+          }
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            koniec = s;
+          }
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            waga = s;
+          }
+          //String poczatek = s.substring(0, s.indexOf(" "));
+          //String koniec = s.substring(s.indexOf(" ")+1, s.indexOf(" ", s.indexOf(" ")+1));
+          //String waga = s.substring(s.indexOf(" ", s.indexOf(" ")+1)+1);
+          System.out.println(poczatek);
+          System.out.println(koniec);
+          System.out.println(waga);
+          BazaDanych.utworzDroge(poczatek, koniec, waga);
+      }
       return 1;
-  }
-    public static void openFileChooser(){
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        chooser.setFileFilter(filter);
-        chooser.showOpenDialog(null);
-        File path = chooser.getSelectedFile();
-        WireworldGUI.textFieldData.setText(path.getPath());
-        System.out.println(WireworldGUI.textFieldData.getText());
     }
+    public static int wczytajPaczki(String nazwaPliku) throws FileNotFoundException, IOException{
+        File plik;
+      Scanner odczyt;
+
+      plik = new File(nazwaPliku);
+      odczyt = new Scanner(plik);
+          
+      
+      String s = "";
+      if(odczyt.hasNextLine()){
+          s = odczyt.nextLine();
+          System.out.println(s.substring(1));
+          BazaDanych.ustawBaze(s.substring(1));
+      }
+      while(odczyt.hasNextLine()){
+          s = odczyt.nextLine();
+          if(s.equals("") || s.equals(" ")){
+              continue;
+          }
+          String numer = "",  poczatek = "", koniec = "", nazwa = "", priorytet = "";
+          Scanner odczyt2 = new Scanner(s);
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            numer = s;
+          }
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            poczatek = s;
+          }
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+            koniec = s;
+          }
+          if(odczyt2.hasNext()){
+            s = odczyt2.next();
+                while(odczyt2.hasNext()){
+                    nazwa = nazwa + s + " ";
+                    s = odczyt2.next();
+                }
+            nazwa = nazwa.substring(0, nazwa.length() -1);
+            priorytet = s;
+          }
+          System.out.println(numer + " - " + poczatek + " - " + koniec + " - " + nazwa + " - " + priorytet);
+          BazaDanych.dodajPaczke(numer, poczatek, koniec, nazwa, priorytet);
+      }
+      
+        return 1;
+    }   
 }

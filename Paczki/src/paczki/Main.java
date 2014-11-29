@@ -5,7 +5,10 @@
  */
 package paczki;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,11 +17,11 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Miasto v0 = new Miasto("Redvile");
-        Miasto v1 = new Miasto("Blueville");
-        Miasto v2 = new Miasto("Greenville");
-        Miasto v3 = new Miasto("Orangeville");
-        Miasto v4 = new Miasto("Purpleville");
+        Miasto v0 = new Miasto(0, "Redvile");
+        Miasto v1 = new Miasto(1, "Blueville");
+        Miasto v2 = new Miasto(2, "Greenville");
+        Miasto v3 = new Miasto(3, "Orangeville");
+        Miasto v4 = new Miasto(4, "Purpleville");
 
         v0.wychodzaceDrogi = new Droga[]{new Droga(v1, 5),
             new Droga(v2, 10),
@@ -92,6 +95,12 @@ public class Main {
             System.out.println("Success!");
         } else {
             System.err.println("Usage: -mapa filename -paczki filename [-s] int [-p] int");
+        }
+        try {
+            Wczytywacz.wczytajMape("dane\\mapka.txt");
+            Wczytywacz.wczytajPaczki("dane\\paczki.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
