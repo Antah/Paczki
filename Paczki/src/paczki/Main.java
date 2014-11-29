@@ -6,6 +6,7 @@
 package paczki;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,18 +24,18 @@ public class Main {
         Miasto v3 = new Miasto(3, "Orangeville");
         Miasto v4 = new Miasto(4, "Purpleville");
 
-        v0.wychodzaceDrogi = new Droga[]{new Droga(v1, 5),
-            new Droga(v2, 10),
-            new Droga(v3, 8)};
-        v1.wychodzaceDrogi = new Droga[]{new Droga(v0, 5),
-            new Droga(v2, 3),
-            new Droga(v4, 7)};
-        v2.wychodzaceDrogi = new Droga[]{new Droga(v0, 10),
-            new Droga(v1, 3)};
-        v3.wychodzaceDrogi = new Droga[]{new Droga(v0, 8),
-            new Droga(v4, 2)};
-        v4.wychodzaceDrogi = new Droga[]{new Droga(v1, 7),
-            new Droga(v3, 2)};
+        v0.wychodzaceDrogi.add(new Droga(v1, 5));
+            v0.wychodzaceDrogi.add(new Droga(v2, 10));
+            v0.wychodzaceDrogi.add(new Droga(v3, 8));
+        v1.wychodzaceDrogi.add(new Droga(v0, 5));
+            v1.wychodzaceDrogi.add(new Droga(v2, 3));
+            v1.wychodzaceDrogi.add(new Droga(v4, 7));
+        v2.wychodzaceDrogi.add(new Droga(v0, 10));
+            v2.wychodzaceDrogi.add(new Droga(v1, 3));
+        v3.wychodzaceDrogi.add(new Droga(v0, 8));
+            v3.wychodzaceDrogi.add(new Droga(v4, 2));
+        v4.wychodzaceDrogi.add(new Droga(v1, 7));
+            v4.wychodzaceDrogi.add(new Droga(v3, 2));
         Miasto[] vertices = {v0, v1, v2, v3, v4};
         SzukanieTrasy.wyznaczTrasy(v0);
         for (Miasto v : vertices) {
@@ -97,10 +98,13 @@ public class Main {
             System.err.println("Usage: -mapa filename -paczki filename [-s] int [-p] int");
         }
         try {
-            Wczytywacz.wczytajMape("dane\\mapka.txt");
+            Wczytywacz.wczytajMape("dane\\mapa.txt");
             Wczytywacz.wczytajPaczki("dane\\paczki.txt");
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        BazaDanych.wypiszPaczki();
+        BazaDanych.wypiszMiasta();
+        BazaDanych.wypiszDrogi();
     }
 }

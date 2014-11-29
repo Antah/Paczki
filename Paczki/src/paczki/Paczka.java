@@ -17,10 +17,12 @@ public class Paczka {
     private Miasto miastoOdbioru;
     private Miasto miastoDocelowe;
     
-    public Paczka(int id, String n, int p){
-        this.numerID = id;
-        this.nazwa = n;
-        this.priorytet = p;
+    public Paczka(int numer, Miasto poczatek, Miasto koniec, String nazwa, int priorytet){
+        this.numerID = numer;
+        this.nazwa = nazwa;
+        this.priorytet = priorytet;
+        this.miastoOdbioru = poczatek;
+        this.miastoDocelowe = koniec;
         this.stan = "NIEODEBRANA";
     }
     // gety ---------------------------------------------------------
@@ -45,4 +47,10 @@ public class Paczka {
         this.stan = "DOSTARCZONA";
     }
     
+    
+    @Override
+    public String toString(){
+        String s = numerID + " - " + miastoOdbioru.getNazwa() + " " + miastoDocelowe.getNazwa() + " " + nazwa + " " + priorytet;
+        return s;
+    }
 }

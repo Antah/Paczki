@@ -14,14 +14,18 @@ public class Droga {
         this.waga = waga;
     }
  
-    public Miasto getCel()
-    {
+    public Miasto getCel(){
         return cel;
     }
 
-    public double getWaga()
-    {
+    public double getWaga(){
         return waga;
+    }
+    
+    @Override
+    public String toString(){
+        String s = cel + " " + waga;
+        return s;
     }
 }
 

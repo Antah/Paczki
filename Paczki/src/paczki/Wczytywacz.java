@@ -35,6 +35,10 @@ public class Wczytywacz {
           if(s.equals("") || s.equals(" ")){
               continue;
           }
+          if(s.contains("#") == true){
+              System.out.println("# - połączenia");
+              break;
+          }
           String numer = "", nazwa = "";
           Scanner odczyt2 = new Scanner(s);
           if(odczyt2.hasNext()){
@@ -71,9 +75,7 @@ public class Wczytywacz {
           //String poczatek = s.substring(0, s.indexOf(" "));
           //String koniec = s.substring(s.indexOf(" ")+1, s.indexOf(" ", s.indexOf(" ")+1));
           //String waga = s.substring(s.indexOf(" ", s.indexOf(" ")+1)+1);
-          System.out.println(poczatek);
-          System.out.println(koniec);
-          System.out.println(waga);
+          System.out.println(poczatek + " " + koniec + " " + waga);
           BazaDanych.utworzDroge(poczatek, koniec, waga);
       }
       return 1;

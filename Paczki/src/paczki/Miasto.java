@@ -5,6 +5,7 @@
  */
 package paczki;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -14,20 +15,21 @@ import java.util.LinkedList;
 class Miasto implements Comparable<Miasto>{
     private final String nazwa;
     private int numer;    //numer porzadkowy wierzcholka.
-    public Droga[] wychodzaceDrogi;    //lista krawędzi wychodzacych z wierzcholka
+    public ArrayList<Droga> wychodzaceDrogi;    
     public double minDystans = Double.POSITIVE_INFINITY;
     public Miasto poprzednie;
     /**
      * @param i numer porzadkowy tworzonego wierzcholka
      */
     public Miasto(int p, String n){
+        this.wychodzaceDrogi = new ArrayList<Droga>();
         numer = p;
         nazwa = n;
     }
  
     @Override
     public String toString(){
-        return nazwa;
+        return numer + " " + nazwa;
     }
  
     public int getNumer() {
@@ -37,7 +39,9 @@ class Miasto implements Comparable<Miasto>{
     public String getNazwa(){
         return nazwa;
     }
-    
+    public void dodajDroge(Miasto cel, int waga){
+        wychodzaceDrogi.add(new Droga(cel, waga));
+    }
     @Override
     public int compareTo(Miasto m){
         return Double.compare(minDystans, m.minDystans);
