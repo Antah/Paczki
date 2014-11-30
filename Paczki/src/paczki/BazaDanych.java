@@ -6,16 +6,19 @@
 package paczki;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
  * @author Antah
  */
 public class BazaDanych {
-    private static ArrayList<Paczka> paczki;
+    public static ArrayList<Paczka> paczki;
     private static ArrayList<Miasto> miasta;
     //private static ArrayList<Droga> drogi;
     private static int baza;
+    public static ArrayList<Samochod> samochody;
 
     public static void utworzMiasto(String numer, String nazwa) {
         if(miasta == null) miasta = new ArrayList<Miasto>();
@@ -49,6 +52,15 @@ public class BazaDanych {
         if(paczki == null) paczki = new ArrayList<Paczka>();
         paczki.add(nowaPaczka);
     }
+    public static void sortujPaczki(){
+        
+    }
+    
+    public static void dodajSamochod(String nazwa, int maxPaczek){
+        if(samochody == null) samochody = new ArrayList<Samochod>();
+        Samochod nowySamochod = new Samochod(nazwa, maxPaczek);
+        samochody.add(nowySamochod);
+    }
     
     public static int getBaza(){
         return baza;
@@ -71,4 +83,5 @@ public class BazaDanych {
             }
         }
     }
+
 }

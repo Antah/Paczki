@@ -35,6 +35,12 @@ public class Paczka {
     public int getPriorytet(){
         return this.priorytet;
     }
+    public Miasto getMiastoOdbioru(){
+        return miastoOdbioru;
+    }
+    public Miasto getMiastoDocelowe(){
+        return miastoDocelowe;
+    }
     
     // zmiana stanów ------------------------------------------------
     public void setStanOczekuje(){
@@ -46,11 +52,18 @@ public class Paczka {
     public void setStanDostarczona(){
         this.stan = "DOSTARCZONA";
     }
+    public String getStan(){
+        return stan;
+    }
     
     
     @Override
     public String toString(){
         String s = numerID + " - " + miastoOdbioru.getNazwa() + " " + miastoDocelowe.getNazwa() + " " + nazwa + " " + priorytet;
         return s;
+    }
+    
+    public boolean equals(Paczka p){
+        return this.nazwa.equals(p.nazwa) && this.numerID == p.numerID && this.priorytet == p.priorytet;
     }
 }

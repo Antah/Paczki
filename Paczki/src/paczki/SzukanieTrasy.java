@@ -39,9 +39,9 @@ public class SzukanieTrasy {
             }
         }
     }
-    public static List<Miasto> getNajkrotszaTrase(Miasto cel)
+    public static ArrayList<Miasto> getNajkrotszaTrase(Miasto cel)
     {
-        List<Miasto> path = new ArrayList<Miasto>();
+        ArrayList<Miasto> path = new ArrayList<Miasto>();
         for (Miasto miasto = cel; miasto != null; miasto = miasto.poprzednie)
             path.add(miasto);
         Collections.reverse(path);

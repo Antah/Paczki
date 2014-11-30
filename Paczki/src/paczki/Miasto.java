@@ -46,4 +46,6 @@ class Miasto implements Comparable<Miasto>{
     public int compareTo(Miasto m){
         return Double.compare(minDystans, m.minDystans);
     }
+    
+    
 }
