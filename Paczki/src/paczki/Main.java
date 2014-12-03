@@ -18,11 +18,11 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        Miasto v0 = new Miasto(0, "Redvile");
-        Miasto v1 = new Miasto(1, "Blueville");
-        Miasto v2 = new Miasto(2, "Greenville");
-        Miasto v3 = new Miasto(3, "Orangeville");
-        Miasto v4 = new Miasto(4, "Purpleville");
+        Miasto v0 = new Miasto(0, "Miasto0");
+        Miasto v1 = new Miasto(1, "Miasto1");
+        Miasto v2 = new Miasto(2, "Miasto2");
+        Miasto v3 = new Miasto(3, "Miasto3");
+        Miasto v4 = new Miasto(4, "Miasto4");
 
         v0.wychodzaceDrogi.add(new Droga(v1, 5));
             v0.wychodzaceDrogi.add(new Droga(v2, 10));
@@ -39,9 +39,9 @@ public class Main {
         Miasto[] vertices = {v0, v1, v2, v3, v4};
         SzukanieTrasy.wyznaczTrasy(v0);
         for (Miasto v : vertices) {
-            System.out.println("Distance to " + v + ": " + v.minDystans);
+            System.out.println("Długość drogi do " + v + ": " + v.minDystans);
             List< Miasto> path = SzukanieTrasy.getNajkrotszaTrase(v);
-            System.out.println("Path: " + path);
+            System.out.println("Droga: " + path);
         }
 
         int i = 0, j = 0;
