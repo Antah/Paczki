@@ -47,4 +47,10 @@ public class SzukanieTrasy {
         Collections.reverse(path);
         return path;
     }
+    public static void wyczyscDaneTymczasowe(){
+        for(Miasto m: BazaDanych.miasta){
+            m.minDystans = Double.POSITIVE_INFINITY;
+            m.poprzednie = null;
+        }
+    }
 }

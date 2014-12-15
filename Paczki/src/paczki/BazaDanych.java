@@ -15,7 +15,7 @@ import java.util.Comparator;
  */
 public class BazaDanych {
     public static ArrayList<Paczka> paczki;
-    private static ArrayList<Miasto> miasta;
+    public static ArrayList<Miasto> miasta;
     //private static ArrayList<Droga> drogi;
     private static int baza;
     public static ArrayList<Samochod> samochody;
@@ -53,7 +53,15 @@ public class BazaDanych {
         paczki.add(nowaPaczka);
     }
     public static void sortujPaczki(){
-        
+        Collections.sort(paczki, new Comparator<Paczka>() {
+            @Override
+            public int compare(Paczka p1, Paczka p2)
+            {
+                if(p1.getPriorytet() > p2.getPriorytet()) return -1;
+                if(p1.getPriorytet() < p2.getPriorytet()) return 1;
+                return 0;
+            }
+        });
     }
     
     public static void dodajSamochod(String nazwa, int maxPaczek){

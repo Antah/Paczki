@@ -103,14 +103,20 @@ public class Main {
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //BazaDanych.wypiszPaczki();
+        System.out.println("------------------------");
+        BazaDanych.wypiszPaczki();
         //BazaDanych.wypiszMiasta();
         //BazaDanych.wypiszDrogi();
-        
-        BazaDanych.dodajSamochod("Samochod0", 0);
-        BazaDanych.dodajSamochod("Samochod1", 1);
+        BazaDanych.sortujPaczki();
+        System.out.println("------------------------");
+        BazaDanych.wypiszPaczki();
+        System.out.println("------------------------");
+        BazaDanych.dodajSamochod("Samochod0", 3);
+        //BazaDanych.dodajSamochod("Samochod1", 3);
         RozWozonko.przydzielPaczki(BazaDanych.samochody.get(0));
-        RozWozonko.przydzielPaczki(BazaDanych.samochody.get(1));
-        RozWozonko.nastepnyKrok();
+        //RozWozonko.przydzielPaczki(BazaDanych.samochody.get(1));
+        for(int h = 0; h < 5; h ++){
+            RozWozonko.nastepnyKrok();
+        }
     }
 }

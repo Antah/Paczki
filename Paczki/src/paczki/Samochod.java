@@ -7,6 +7,7 @@ package paczki;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class Samochod {
     public ArrayList<Miasto> trasa;
     public ArrayList<Double> trasaOdleglosci;
     public double czas;
+    public Miasto miastoPobytu;
     
     public Samochod(String n, int m){
         this.maxPaczek = m;
@@ -29,6 +31,7 @@ public class Samochod {
         this.trasaOdleglosci = new ArrayList<Double>();
         this.nazwa = n;
         this.czas = 0;
+        this.miastoPobytu = BazaDanych.miasta.get(BazaDanych.getBaza());
     }
     public String getNazwa(){
         return this.nazwa;
@@ -39,57 +42,107 @@ public class Samochod {
         }
         paczki.add(p);
         iloscPaczek++;
-        System.out.println("\tpaczka - " + p.getNazwa() + " - została dodana do listy samochodu - " + nazwa);
+        System.out.println("\tpaczka - " + p.getNazwa() + "(" + p.getMiastoOdbioru() +"-"+ p.getMiastoDocelowe() +")"+ "- została dodana do listy samochodu - " + nazwa);
         return true;
     }
-    public void usunPaczke(Paczka p){
-        for(Paczka pp: paczki){
-            if(pp.equals(p)) paczki.remove(p);
+    public void usunPaczki(){
+        for(Paczka p: paczki){
+            if(p.getStan().equals("DOSTARCZONA")){
+                paczki.remove(p);
+                iloscPaczek--;
+            }
         }
     }
 
     public void ustawTrase(ArrayList<Miasto> trasa) {
-        this.trasa = new ArrayList<Miasto>(trasa);
+        //if(this.trasa.isEmpty() && trasaOdleglosci.isEmpty()){
+        this.trasa = new ArrayList<Miasto>();
         this.trasaOdleglosci = new ArrayList<Double>();
-        for (Miasto miasto: this.trasa){
-            for(Droga d: miasto.wychodzaceDrogi){
-                if(d.getCel().equals(miasto.poprzednie)) trasaOdleglosci.add(d.getWaga());
+            this.trasa = trasa;
+            for (Miasto miasto: this.trasa){
+                for(Droga d: miasto.wychodzaceDrogi){
+                    if(d.getCel().equals(miasto.poprzednie)) trasaOdleglosci.add(d.getWaga());
+                }
             }
+        //System.out.println(this.trasa.toString());
+            czas += trasaOdleglosci.get(0);
+        /*} else {
+            System.out.println(this.trasa.toString());
+            trasa.remove(0);
+            System.out.println(this.trasa.toString());
+            this.trasa.addAll(trasa);
+            System.out.println(this.trasa.toString());
+        }*/  
+    }
+    public void wypiszTrase(){
+        for(Double d: trasaOdleglosci){
+            System.out.println(d);
         }
     }
 
     public void usunPrzystanek() {
-        czas += trasaOdleglosci.get(0);
-        System.out.println("\t" + czas + " - " + nazwa + " - dojechał do miasta - " + trasa.get(0).getNazwa());
-        for(Paczka p: paczki){
-            if(p.getMiastoOdbioru().equals(trasa.get(0)) && p.getStan().equals("OCZEKUJE")){
+        this.miastoPobytu = trasa.get(0);
+        System.out.println("\t" + czas + " - " + nazwa + " - dojechał do miasta - " + miastoPobytu.getNazwa());
+        Iterator<Paczka> pp = paczki.iterator();
+        while(pp.hasNext()){
+            Paczka p = pp.next();
+            if(p.getMiastoOdbioru().equals(miastoPobytu) && p.getStan().equals("OCZEKUJE")){
                 p.setStanWDrodze();
                 System.out.println("\t" + czas + " - " + nazwa + " - paczka - " + p.getNazwa() + " - została odebrana");
             }
-            if(p.getMiastoDocelowe().equals(trasa.get(0)) && p.getStan().equals("WDRODZE")){
+            if(p.getMiastoDocelowe().equals(miastoPobytu) && p.getStan().equals("WDRODZE")){
                 p.setStanDostarczona();
                 System.out.println("\t" + czas + " - " + nazwa + " - paczka - " + p.getNazwa() + " - została dostarczona");
-                paczki.remove(p);
+                p.setStanDostarczona();
+                pp.remove();
+                iloscPaczek--;
+                
             }
         }
-        Miasto mtmp = trasa.get(0);
+        usunPaczki();
+        System.out.println(trasa.toString() + trasaOdleglosci.toString());
         trasa.remove(0);
         trasaOdleglosci.remove(0);
-        int maxPrio = 0;
-        Paczka nowaPaczka = null;
-        if(trasa.get(0) == null){
+        System.out.println(trasa.toString() + trasaOdleglosci.toString());
+        if(!trasa.isEmpty()){
+            czas += trasaOdleglosci.get(0);
+        } else if(!paczki.isEmpty()){
+            int maxPrio = 0;
+            Paczka nowaPaczka = null;
             for(Paczka p: paczki){
                 if(p.getPriorytet() > maxPrio){
                     maxPrio = p.getPriorytet();
                     nowaPaczka = p;
                 }
             }
-            SzukanieTrasy.wyznaczTrasy(mtmp);
+            System.out.println("robie nowom trase z " + miastoPobytu.getNazwa());
+            SzukanieTrasy.wyczyscDaneTymczasowe();
+            SzukanieTrasy.wyznaczTrasy(miastoPobytu);
             ustawTrase(SzukanieTrasy.getNajkrotszaTrase(nowaPaczka.getMiastoDocelowe()));
+            SzukanieTrasy.wyczyscDaneTymczasowe();
+            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+            trasa.remove(0);
+            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+        }else if(!miastoPobytu.equals(BazaDanych.miasta.get(BazaDanych.getBaza()))){
+            System.out.println("wracam do bazy "+this.nazwa);
+            SzukanieTrasy.wyczyscDaneTymczasowe();
+            SzukanieTrasy.wyznaczTrasy(miastoPobytu);
+            ustawTrase(SzukanieTrasy.getNajkrotszaTrase(BazaDanych.miasta.get(BazaDanych.getBaza())));
+            SzukanieTrasy.wyczyscDaneTymczasowe();
+            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+            trasa.remove(0);
+            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+        } else {
+            RozWozonko.przydzielPaczki(this);
         }
     }
     
     public boolean equals(Samochod s){
         return this.nazwa.equals(s.nazwa) && this.maxPaczek == s.maxPaczek;
+    }
+    
+    public boolean czyPelny(){
+        if(this.maxPaczek <= this.iloscPaczek) return true;
+        return false;
     }
 }
