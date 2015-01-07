@@ -95,15 +95,14 @@ public class Samochod {
                 System.out.println("\t" + czas + " - " + nazwa + " - paczka - " + p.getNazwa() + " - została dostarczona");
                 p.setStanDostarczona();
                 pp.remove();
-                iloscPaczek--;
-                
+                iloscPaczek--;        
             }
         }
         usunPaczki();
-        System.out.println(trasa.toString() + trasaOdleglosci.toString());
+        //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         trasa.remove(0);
         trasaOdleglosci.remove(0);
-        System.out.println(trasa.toString() + trasaOdleglosci.toString());
+        //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         if(!trasa.isEmpty()){
             czas += trasaOdleglosci.get(0);
         } else if(!paczki.isEmpty()){
@@ -115,23 +114,23 @@ public class Samochod {
                     nowaPaczka = p;
                 }
             }
-            System.out.println("robie nowom trase z " + miastoPobytu.getNazwa());
+            //System.out.println("robie nowom trase z " + miastoPobytu.getNazwa());
             SzukanieTrasy.wyczyscDaneTymczasowe();
             SzukanieTrasy.wyznaczTrasy(miastoPobytu);
             ustawTrase(SzukanieTrasy.getNajkrotszaTrase(nowaPaczka.getMiastoDocelowe()));
             SzukanieTrasy.wyczyscDaneTymczasowe();
-            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
             trasa.remove(0);
-            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         }else if(!miastoPobytu.equals(BazaDanych.miasta.get(BazaDanych.getBaza()))){
-            System.out.println("wracam do bazy "+this.nazwa);
+            //System.out.println("wracam do bazy "+this.nazwa);
             SzukanieTrasy.wyczyscDaneTymczasowe();
             SzukanieTrasy.wyznaczTrasy(miastoPobytu);
             ustawTrase(SzukanieTrasy.getNajkrotszaTrase(BazaDanych.miasta.get(BazaDanych.getBaza())));
             SzukanieTrasy.wyczyscDaneTymczasowe();
-            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
             trasa.remove(0);
-            System.out.println(trasa.toString() + trasaOdleglosci.toString());
+            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         } else {
             RozWozonko.przydzielPaczki(this);
         }

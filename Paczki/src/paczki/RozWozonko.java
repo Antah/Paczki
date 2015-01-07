@@ -56,8 +56,8 @@ public class RozWozonko {
         }
     }
 
-    public static void nastepnyKrok() {
-        double waga = 1000;
+    public static boolean nastepnyKrok() {
+        double czas = Double.POSITIVE_INFINITY;
         Samochod sam = null;
         for (Samochod s : BazaDanych.samochody) {
             // System.out.println("jestem w forze");
@@ -65,14 +65,16 @@ public class RozWozonko {
             if (s.trasaOdleglosci.isEmpty()) {
                 //System.out.println("pusto");
             }
-            if (!s.trasaOdleglosci.isEmpty() && s.czas < waga) {
+            if (!s.trasaOdleglosci.isEmpty() && s.czas < czas) {
                 //System.out.println("jestem w ifie");
-                waga = s.czas;
+                czas = s.czas;
                 sam = s;
             }
         }
         if (sam != null) {
             sam.usunPrzystanek();
+            return true;
         }
+        return false;
     }
 }

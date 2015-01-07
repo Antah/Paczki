@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
+        /*
         Miasto v0 = new Miasto(0, "Miasto0");
         Miasto v1 = new Miasto(1, "Miasto1");
         Miasto v2 = new Miasto(2, "Miasto2");
@@ -43,7 +44,7 @@ public class Main {
             List< Miasto> path = SzukanieTrasy.getNajkrotszaTrase(v);
             System.out.println("Droga: " + path);
         }
-
+        */
         int i = 0, j = 0;
         String arg;
         String plikZMapa = "";
@@ -98,25 +99,23 @@ public class Main {
             System.err.println("Usage: -mapa filename -paczki filename [-s] int [-p] int");
         }
         try {
+            System.out.println("------------------------");
             Wczytywacz.wczytajMape("dane\\mapa.txt");
+            System.out.println("------------------------");
             Wczytywacz.wczytajPaczki("dane\\paczki.txt");
+            System.out.println("------------------------");
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("------------------------");
-        BazaDanych.wypiszPaczki();
+        //BazaDanych.wypiszPaczki();
         //BazaDanych.wypiszMiasta();
         //BazaDanych.wypiszDrogi();
         BazaDanych.sortujPaczki();
-        System.out.println("------------------------");
-        BazaDanych.wypiszPaczki();
-        System.out.println("------------------------");
-        BazaDanych.dodajSamochod("Samochod0", 3);
-        //BazaDanych.dodajSamochod("Samochod1", 3);
-        RozWozonko.przydzielPaczki(BazaDanych.samochody.get(0));
-        //RozWozonko.przydzielPaczki(BazaDanych.samochody.get(1));
-        for(int h = 0; h < 5; h ++){
-            RozWozonko.nastepnyKrok();
+        for(i = 0; i < liczbaSamochodow; i++){
+            BazaDanych.dodajSamochod("Samochod"+i, 3);
+            RozWozonko.przydzielPaczki(BazaDanych.samochody.get(i));
         }
+        while(RozWozonko.nastepnyKrok());
+        System.out.println("------------------------");
     }
 }
