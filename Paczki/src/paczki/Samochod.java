@@ -55,7 +55,6 @@ public class Samochod {
     }
 
     public void ustawTrase(ArrayList<Miasto> trasa) {
-        //if(this.trasa.isEmpty() && trasaOdleglosci.isEmpty()){
         this.trasa = new ArrayList<Miasto>();
         this.trasaOdleglosci = new ArrayList<Double>();
             this.trasa = trasa;
@@ -64,15 +63,7 @@ public class Samochod {
                     if(d.getCel().equals(miasto.poprzednie)) trasaOdleglosci.add(d.getWaga());
                 }
             }
-        //System.out.println(this.trasa.toString());
             czas += trasaOdleglosci.get(0);
-        /*} else {
-            System.out.println(this.trasa.toString());
-            trasa.remove(0);
-            System.out.println(this.trasa.toString());
-            this.trasa.addAll(trasa);
-            System.out.println(this.trasa.toString());
-        }*/  
     }
     public void wypiszTrase(){
         for(Double d: trasaOdleglosci){
@@ -115,19 +106,15 @@ public class Samochod {
                 }
             }
             //System.out.println("robie nowom trase z " + miastoPobytu.getNazwa());
-            SzukanieTrasy.wyczyscDaneTymczasowe();
             SzukanieTrasy.wyznaczTrasy(miastoPobytu);
             ustawTrase(SzukanieTrasy.getNajkrotszaTrase(nowaPaczka.getMiastoDocelowe()));
-            SzukanieTrasy.wyczyscDaneTymczasowe();
             //System.out.println(trasa.toString() + trasaOdleglosci.toString());
             trasa.remove(0);
             //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         }else if(!miastoPobytu.equals(BazaDanych.miasta.get(BazaDanych.getBaza()))){
             //System.out.println("wracam do bazy "+this.nazwa);
-            SzukanieTrasy.wyczyscDaneTymczasowe();
             SzukanieTrasy.wyznaczTrasy(miastoPobytu);
             ustawTrase(SzukanieTrasy.getNajkrotszaTrase(BazaDanych.miasta.get(BazaDanych.getBaza())));
-            SzukanieTrasy.wyczyscDaneTymczasowe();
             //System.out.println(trasa.toString() + trasaOdleglosci.toString());
             trasa.remove(0);
             //System.out.println(trasa.toString() + trasaOdleglosci.toString());

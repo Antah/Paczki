@@ -17,6 +17,7 @@ import java.util.PriorityQueue;
 public class SzukanieTrasy {
     public static void wyznaczTrasy(Miasto daneMiasto)
     {
+        wyczyscDaneTymczasowe();
         daneMiasto.minDystans = 0;
         PriorityQueue<Miasto> miastaQueue = new PriorityQueue<Miasto>();
       	miastaQueue.add(daneMiasto);

@@ -27,10 +27,8 @@ public class RozWozonko {
                     p.setStanOczekuje();
                 }
                 //System.out.println(BazaDanych.miasta.get(BazaDanych.getBaza()).toString());
-                SzukanieTrasy.wyczyscDaneTymczasowe();
                 SzukanieTrasy.wyznaczTrasy(s.miastoPobytu);
                 s.ustawTrase(SzukanieTrasy.getNajkrotszaTrase(p.getMiastoDocelowe()));
-                SzukanieTrasy.wyczyscDaneTymczasowe();
                 if (p.getMiastoOdbioru().equals(s.trasa.get(0))) {
                     p.setStanWDrodze();
                 }
