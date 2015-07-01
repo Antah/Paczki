@@ -19,14 +19,10 @@ public class RozWozonko {
     public static void przydzielPaczki(Samochod s) {
         Paczka ptmp = null;
         for (Paczka p : BazaDanych.paczki) {
-            //System.out.println("pierwsza paczkafor");
             if (p.getStan().equals("NIEODEBRANA")) {
-                //System.out.println("pierwsza paczka");
-                //System.out.println(p.getMiastoDocelowe().toString() + p.toString());
                 if (s.dodajPaczke(p)) {
                     p.setStanOczekuje();
                 }
-                //System.out.println(BazaDanych.miasta.get(BazaDanych.getBaza()).toString());
                 SzukanieTrasy.wyznaczTrasy(s.miastoPobytu);
                 s.ustawTrase(SzukanieTrasy.getNajkrotszaTrase(p.getMiastoDocelowe()));
                 if (p.getMiastoOdbioru().equals(s.trasa.get(0))) {
@@ -42,9 +38,6 @@ public class RozWozonko {
                 if (m.equals(pp.getMiastoOdbioru()) && pp.getStan().equals("NIEODEBRANA")) {
                     if(s.dodajPaczke(pp)) pp.setStanOczekuje();
                     if(pp.getMiastoOdbioru().equals(s.trasa.get(0))) pp.setStanWDrodze();
-                    //SzukanieTrasy.wyznaczTrasy(s.trasa.get(s.trasa.size()-1));
-                    //s.ustawTrase(SzukanieTrasy.getNajkrotszaTrase(ptmp.getMiastoDocelowe()));
-                    //SzukanieTrasy.wyczyscDaneTymczasowe();
                 }
             }
         }
@@ -58,13 +51,7 @@ public class RozWozonko {
         double czas = Double.POSITIVE_INFINITY;
         Samochod sam = null;
         for (Samochod s : BazaDanych.samochody) {
-            // System.out.println("jestem w forze");
-            //s.wypiszTrase();
-            if (s.trasaOdleglosci.isEmpty()) {
-                //System.out.println("pusto");
-            }
             if (!s.trasaOdleglosci.isEmpty() && s.czas < czas) {
-                //System.out.println("jestem w ifie");
                 czas = s.czas;
                 sam = s;
             }

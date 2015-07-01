@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paczki;
 
 import java.util.ArrayList;
@@ -16,7 +11,6 @@ import java.util.Comparator;
 public class BazaDanych {
     public static ArrayList<Paczka> paczki;
     public static ArrayList<Miasto> miasta;
-    //private static ArrayList<Droga> drogi;
     private static int baza;
     public static ArrayList<Samochod> samochody;
 

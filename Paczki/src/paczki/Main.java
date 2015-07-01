@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paczki;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-/**
+/*
  *
  * @author Antah
  */
@@ -49,8 +41,8 @@ public class Main {
         String arg;
         String plikZMapa = "";
         String plikZeZleceniami = "";
-        int liczbaSamochodow = 5;
-        int maxPaczekNaSamochod = 5;
+        int liczbaSamochodow = 3;
+        int maxPaczekNaSamochod = 2;
 
         while (i < args.length && args[i].startsWith("-")) {
             arg = args[i];
@@ -88,7 +80,7 @@ public class Main {
                         maxPaczekNaSamochod = Integer.parseInt(args[i]);
                         i++;
                     } else {
-                        System.err.println("-mapa requires an int");
+                        System.err.println("-p requires an int");
                     }
                     break;
             }
@@ -112,10 +104,15 @@ public class Main {
         //BazaDanych.wypiszDrogi();
         BazaDanych.sortujPaczki();
         for(i = 0; i < liczbaSamochodow; i++){
-            BazaDanych.dodajSamochod("Samochod"+i, 3);
+            BazaDanych.dodajSamochod("Samochod"+i, maxPaczekNaSamochod);
             RozWozonko.przydzielPaczki(BazaDanych.samochody.get(i));
         }
         while(RozWozonko.nastepnyKrok());
-        System.out.println("------------------------");
+        System.out.println("------------------------Paczki rozwiezione");
+        
+        //----------------------------------------
+        
+        
+        
     }
 }

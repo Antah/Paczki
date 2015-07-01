@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paczki;
 
 import java.util.ArrayList;
@@ -45,14 +40,6 @@ public class Samochod {
         System.out.println("\tpaczka - " + p.getNazwa() + "(" + p.getMiastoOdbioru() +"-"+ p.getMiastoDocelowe() +")"+ "- została dodana do listy samochodu - " + nazwa);
         return true;
     }
-    public void usunPaczki(){
-        for(Paczka p: paczki){
-            if(p.getStan().equals("DOSTARCZONA")){
-                paczki.remove(p);
-                iloscPaczek--;
-            }
-        }
-    }
 
     public void ustawTrase(ArrayList<Miasto> trasa) {
         this.trasa = new ArrayList<Miasto>();
@@ -65,6 +52,7 @@ public class Samochod {
             }
             czas += trasaOdleglosci.get(0);
     }
+    
     public void wypiszTrase(){
         for(Double d: trasaOdleglosci){
             System.out.println(d);
@@ -86,18 +74,15 @@ public class Samochod {
                 System.out.println("\t" + czas + " - " + nazwa + " - paczka - " + p.getNazwa() + " - została dostarczona");
                 p.setStanDostarczona();
                 pp.remove();
-                iloscPaczek--;        
+                iloscPaczek--;
             }
         }
-        usunPaczki();
-        //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         trasa.remove(0);
         trasaOdleglosci.remove(0);
-        //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         if(!trasa.isEmpty()){
             czas += trasaOdleglosci.get(0);
         } else if(!paczki.isEmpty()){
-            int maxPrio = 0;
+            int maxPrio = (int)Double.NEGATIVE_INFINITY;
             Paczka nowaPaczka = null;
             for(Paczka p: paczki){
                 if(p.getPriorytet() > maxPrio){
@@ -105,19 +90,13 @@ public class Samochod {
                     nowaPaczka = p;
                 }
             }
-            //System.out.println("robie nowom trase z " + miastoPobytu.getNazwa());
             SzukanieTrasy.wyznaczTrasy(miastoPobytu);
             ustawTrase(SzukanieTrasy.getNajkrotszaTrase(nowaPaczka.getMiastoDocelowe()));
-            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
             trasa.remove(0);
-            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         }else if(!miastoPobytu.equals(BazaDanych.miasta.get(BazaDanych.getBaza()))){
-            //System.out.println("wracam do bazy "+this.nazwa);
             SzukanieTrasy.wyznaczTrasy(miastoPobytu);
             ustawTrase(SzukanieTrasy.getNajkrotszaTrase(BazaDanych.miasta.get(BazaDanych.getBaza())));
-            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
             trasa.remove(0);
-            //System.out.println(trasa.toString() + trasaOdleglosci.toString());
         } else {
             RozWozonko.przydzielPaczki(this);
         }

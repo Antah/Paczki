@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paczki;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,9 +67,6 @@ public class Wczytywacz {
             s = odczyt2.next();
             waga = s;
           }
-          //String poczatek = s.substring(0, s.indexOf(" "));
-          //String koniec = s.substring(s.indexOf(" ")+1, s.indexOf(" ", s.indexOf(" ")+1));
-          //String waga = s.substring(s.indexOf(" ", s.indexOf(" ")+1)+1);
           System.out.println(poczatek + " " + koniec + " " + waga);
           BazaDanych.utworzDroge(poczatek, koniec, waga);
       }

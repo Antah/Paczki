@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paczki;
 
 import java.util.ArrayList;
@@ -25,7 +20,6 @@ public class SzukanieTrasy {
 	while (!miastaQueue.isEmpty()) {
 	    Miasto m = miastaQueue.poll();
 
-            // Visit each edge exiting u
             for (Droga d : m.wychodzaceDrogi)
             {
                 Miasto n = d.getCel();

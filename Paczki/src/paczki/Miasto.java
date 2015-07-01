@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paczki;
 
 import java.util.ArrayList;
@@ -14,13 +9,11 @@ import java.util.LinkedList;
  */
 class Miasto implements Comparable<Miasto>{
     private final String nazwa;
-    private int numer;    //numer porzadkowy wierzcholka.
+    private int numer;
     public ArrayList<Droga> wychodzaceDrogi;    
     public double minDystans = Double.POSITIVE_INFINITY;
     public Miasto poprzednie;
-    /**
-     * @param i numer porzadkowy tworzonego wierzcholka
-     */
+
     public Miasto(int p, String n){
         this.wychodzaceDrogi = new ArrayList<Droga>();
         numer = p;
